@@ -14,5 +14,7 @@ public interface BoardService {
    
    public void remove(Integer boardNo) throws Exception;
    
-   public List<Board> list() throws Exception;
+   public List<Board> list(String searchOption, String keyword) throws Exception;
+   
+   public int countArticle(String searchOption, String keyword) throws Exception;
 }

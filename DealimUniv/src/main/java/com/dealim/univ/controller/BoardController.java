@@ -1,6 +1,8 @@
 package com.dealim.univ.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dealim.univ.domain.Board;
 import com.dealim.univ.service.BoardService;
@@ -34,25 +37,49 @@ public class BoardController {
 	@PostMapping("/register")
 	public String register(Board board, Model model) throws Exception {
 		logger.info("BoardController, register.");
-		
-		
-		 boardService.register(board);
+			
+		boardService.register(board);
 		  
-		 model.addAttribute("msg", "등록되었습니다");
-		 
-		
+		model.addAttribute("msg", "등록되었습니다");
+		 		
 		return "board/success";
 	}
 	
 	@GetMapping("/list")
-	public String list(Model model) throws Exception {
+	public ModelAndView list(Model model, @RequestParam(defaultValue="price") String searchOption, 
+						@RequestParam(defaultValue="") String keyword) throws Exception {
 		logger.info("BoardController, list.");
 		
-		List<Board> resultList = boardService.list();
+		//model테스트
+		String test= "model interface";		
+		model.addAttribute("test", test);
+		
+		//DB 질의 결과값
+		List<Board> resultList = boardService.list(searchOption, keyword);
+		
+		//레코드의 갯수
+		int count = boardService.countArticle(searchOption, keyword);
+		
+		ModelAndView mav = new ModelAndView();
 		
 		model.addAttribute("list", resultList);
 		
-		return "board/list";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", resultList );
+		map.put("count", count);
+		map.put("searchOption", searchOption);
+		map.put("keyword", keyword);
+		mav.addObject("map", map);
+		mav.setViewName("board/list");		
+
+		logger.info("list={}, secondData={}", new Object[]{resultList, "thisisseconddata"});
+		logger.info("mav={}, secondData={}", new Object[]{mav, "thisisseconddata"});
+		logger.info(searchOption);
+		logger.info(keyword);
+		
+		return mav;
+		
+//		return "board/list";
 	}
 	
 	@GetMapping("/read")
@@ -61,13 +88,9 @@ public class BoardController {
 			, Model model
 			) throws Exception {
 		logger.info("BoardController, read.");
-		
-		
-		  Board board = boardService.read(boardNo);
-		  model.addAttribute("board", board);
-		 
-		 
-		 
+			
+		Board board = boardService.read(boardNo);
+		model.addAttribute("board", board);	 
 		
 		return "board/read";
 	}
@@ -90,9 +113,8 @@ public class BoardController {
 	public String modifyForm(int boardNo, Model model) throws Exception {
 		logger.info("BoardController, modifyForm.");
 		
-		  Board board = boardService.read(boardNo);
-		  model.addAttribute("board", board);
-		 
+		Board board = boardService.read(boardNo);
+		model.addAttribute("board", board);		 
 		
 		return "board/modify";
 	}
@@ -101,8 +123,8 @@ public class BoardController {
 	public String modify(Board board, Model model) throws Exception {
 		logger.info("BoardController, modify.");
 		
-		 boardService.modify(board);
-		  model.addAttribute("msg", "수정되었습니다");
+		boardService.modify(board);
+		model.addAttribute("msg", "수정되었습니다");
 
 		return "board/success";
 	}

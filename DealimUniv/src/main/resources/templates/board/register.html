@@ -64,6 +64,24 @@ $(document).ready(function() {
 				</font>
 			</td>
 		</tr>
+		<tr>
+			<td>Price</td>
+			<td><input type="text" name="price" th:field="*{price}"  /></td>
+			<td>
+				<span th:if="${#fields.hasErrors('price')}"  th:errors="*{price}">
+						price
+				</span>
+			</td>
+		</tr>
+		<tr>
+			<td>Outlay Date</td>
+			<td><input type="text" name="out_date" th:field="*{out_date}"  /></td>
+			<td>
+				<span th:if="${#fields.hasErrors('out_date')}"  th:errors="*{out_date}">
+						out_date
+				</span>
+			</td>
+		</tr>
 	</table>
 </form>
 

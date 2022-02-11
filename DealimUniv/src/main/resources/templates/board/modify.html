@@ -38,7 +38,7 @@ $(document).ready(function() {
 			<td>
 				<font color="red">
 					<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
-						title의 에러 메시지
+						title
 					</span>
 				</font>
 			</td>
@@ -51,7 +51,7 @@ $(document).ready(function() {
 			<td>
 				<font color="red">
 					<span th:if="${#fields.hasErrors('writer')}" th:errors="*{writer}">
-						writer의 에러 메시지
+						writer
 					</span>
 				</font>
 			</td>
@@ -64,16 +64,38 @@ $(document).ready(function() {
 			<td>
 				<font color="red">
 					<span th:if="${#fields.hasErrors('content')}" th:errors="*{content}">
-						content의 에러 메시지
+						content
 					</span>
 				</font>
 			</td>
+		</tr>
+		<tr>
+			<td>Price</td>
+			<td>
+				<input type="text" name="Price" th:field="*{Price}" />
+			</td>
+			<td>
+				<font color="red">
+					<span th:if="${#fields.hasErrors('Price')}" th:errors="*{Price}">
+						Price
+					</span>
+				</font>
+			</td>			
+		</tr>
+		<tr>
+			<td>Outlay Date</td>
+			<td>
+				<input type="text" name="out_date" th:field="*{out_date}" />
+			</td>
+			<td>
+
+			</td>			
 		</tr>
 	</table>
 </form>
 
 <div>
-	<button type="submit" id="btnModify">수정</button>
+	<button type="submit" id="btnModify">수정완료</button>
 	<button type="submit" id="btnList">목록</button>
 </div>
 </body>

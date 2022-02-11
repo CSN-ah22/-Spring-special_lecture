@@ -1,6 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
+<meta charset="UTF-8">
 <title>Board</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
@@ -50,13 +51,23 @@ $(document).ready(function() {
          <td><textarea name="content" 
                   th:field="*{content}" readonly="readonly"></textarea></td>
       </tr>
+      <tr>
+         <td>Price</td>
+         <td><input type="text" 
+                  th:field="*{Price}" readonly="readonly" /></td>
+      </tr>
+      <tr>
+         <td>Outlay Date</td>
+         <td><input type="text" 
+                  th:field="*{out_date}" readonly="readonly" /></td>
+      </tr>
    </table>
 </form>
 
 <div>
-   <button type="submit" id="btnModify">ºˆ¡§</button>
-   <button type="submit" id="btnRemove">ªË¡¶</button> 
-   <button type="submit" id="btnList">∏Ò∑œ</button>
+   <button type="submit" id="btnModify">ÏàòÏ†ï</button>
+   <button type="submit" id="btnRemove">ÏÇ≠Ï†ú</button> 
+   <button type="submit" id="btnList">Î™©Î°ù</button>
 </div>
 </body>
 </html>

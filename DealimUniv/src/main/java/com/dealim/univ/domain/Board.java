@@ -7,6 +7,8 @@ public class Board {
 	private String content;
 	private String writer;
 	private String regDate;
+	private int price;
+	private String out_date;
 	
 	public int getBoardNo() {
 		return boardNo;
@@ -38,11 +40,23 @@ public class Board {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+	public String getOut_date() {
+		return out_date;
+	}
+	public void setOut_date(String out_date) {
+		this.out_date = out_date;
+	}
 	
 	@Override
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", title=" + title + ", content=" + content + ", writer=" + writer
-				+ ", regDate=" + regDate + "]";
+				+ ", regDate=" + regDate + ", price=" + price + ", out_date=" + out_date + "]";
 	}
 	
 }

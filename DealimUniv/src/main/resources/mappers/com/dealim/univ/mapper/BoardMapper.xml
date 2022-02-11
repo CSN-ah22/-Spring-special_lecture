@@ -13,6 +13,8 @@
 					, content
 					, writer
 					, reg_date	AS regDate
+					, price	AS Price
+					, out_date 
 			FROM	board
 			WHERE	board_no > 0
 			ORDER BY 	board_no DESC
@@ -20,16 +22,36 @@
 		]]>
 	</select>
 	
+	<select id="countArticle" resultType="int">
+		SELECT COUNT(*) FROM board
+		<!-- WHERE절을 include 태그로 삽입 -->
+		<include refid="search"></include>
+	</select>
+	
+	<sql id="search">
+		<choose>
+			<when test="searchOption == 'all'">
+				WHERE writer like '%'||#{keyword}||'%'
+				OR price like '%'||#{keyword}||'%'
+				OR title like '%'||#{keyword}||'%'
+			</when>
+			<otherwise>
+				WHERE ${searchOption} like '%'||#{keyword}||'%'
+			</otherwise>
+		</choose>
+	</sql>
 
 	<select id="read" parameterType="java.lang.Integer"
          resultType="com.dealim.univ.domain.Board">
-      SELECT   board_no   AS boardNo
-            , title
-            , content
-            , writer
-            , reg_date   AS regDate
-      FROM   board
-      WHERE   board_no = #{boardNo}
+      SELECT   	board_no   AS boardNo
+            	, title
+            	, content
+            	, writer
+            	, reg_date   AS regDate
+            	, price AS Price
+            	, out_date 
+      FROM   	board
+      WHERE   	board_no = #{boardNo}
    </select> 
 
 	
@@ -38,12 +60,14 @@
 			UPDATE  board
 			SET 	title		= #{title}
 					, content 	= #{content}
+					, price		= #{price}
+					, out_date	= #{out_date}
 			WHERE 	board_no 	= #{boardNo}
 	</update> 
 	
 	<delete id="delete"
 			parameterType="java.lang.Integer">
-			DELETE FROM board
+			DELETE 	FROM board
 			WHERE 	board_no = #{boardNo}
 	</delete>
 	
@@ -54,12 +78,16 @@
 			title
 			, content
 			, writer
+			, price
+			, out_date
 		) 
 		VALUES
 		(
 			#{title}
 			, #{content}
 			, #{writer}
+			, #{price}
+			, #{out_date}
 		) 
 	</insert> 
 

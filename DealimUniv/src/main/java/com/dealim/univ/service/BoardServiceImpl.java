@@ -35,8 +35,12 @@ public class BoardServiceImpl implements BoardService {
    }
 
    @Override
-   public List<Board> list() throws Exception {
-      return boardMapper.list();
+   public List<Board> list(String searchOption, String keyword) throws Exception {
+      return boardMapper.list(searchOption, keyword);
    }
-   
+   // 게시글 레코드 갯수
+   @Override
+   public int countArticle(String searchOption, String keyword) throws Exception {
+	      return boardMapper.countArticle(searchOption, keyword);
+	   }
 }
